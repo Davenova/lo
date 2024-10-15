@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const scrollContainer = scrollRef.current
     let isScrolling = false
-    let startY
+    let startY: number;
 
     const handleTouchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY
