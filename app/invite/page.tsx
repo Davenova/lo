@@ -76,6 +76,13 @@ export default function Invite() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Invite Friends</h1>
 
+      {/* Add a new section to display the invitedBy data */}
+      {user.invitedBy && (
+        <div className="text-center mb-4">
+          <p>Invited by: {user.invitedBy}</p>
+        </div>
+      )}
+
       {/* Invite Button */}
       <div className="py-2 px-4 rounded mt-4 bg-blue-500 hover:bg-blue-700">
         <button
