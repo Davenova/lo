@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { WebApp } from '@twa-dev/types'
 import React from 'react'
-import { Home as HomeIcon, Users, Wallet } from 'lucide-react'
+import { Home, Users, Wallet } from 'lucide-react'
 
 declare global {
   interface Window {
