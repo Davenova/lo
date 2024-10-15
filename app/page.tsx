@@ -23,10 +23,7 @@ export default function Home() {
   const [buttonStage2, setButtonStage2] = useState<'check' | 'claim' | 'claimed'>('check')
   const [isLoading, setIsLoading] = useState(false)
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    // Existing Telegram WebApp initialization code...
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp
       tg.ready()
@@ -63,45 +60,8 @@ export default function Home() {
     } else {
       setError('This app should be opened in Telegram')
     }
-
-    // New scroll functionality
-    const scrollContainer = scrollRef.current;
-    if (scrollContainer) {
-      let isScrolling = false;
-      let startY: number;
-
-      const handleTouchStart = (e: TouchEvent) => {
-        startY = e.touches[0].clientY;
-      };
-
-      const handleTouchMove = (e: TouchEvent) => {
-        if (isScrolling) return;
-        
-        const currentY = e.touches[0].clientY;
-        const diff = startY - currentY;
-        const threshold = 10;
-        if (Math.abs(diff) > threshold) {
-          isScrolling = true;
-          if (diff > 0) {
-            scrollContainer.scrollBy({ top: scrollContainer.offsetHeight, behavior: 'smooth' });
-          } else {
-            scrollContainer.scrollBy({ top: -scrollContainer.offsetHeight, behavior: 'smooth' });
-          }
-          setTimeout(() => { isScrolling = false; }, 500);
-        }
-      };
-
-      scrollContainer.addEventListener('touchstart', handleTouchStart);
-      scrollContainer.addEventListener('touchmove', handleTouchMove);
-
-      return () => {
-        scrollContainer.removeEventListener('touchstart', handleTouchStart);
-        scrollContainer.removeEventListener('touchmove', handleTouchMove);
-      };
-    }
   }, [])
 
-  // Existing functionality...
   const handleIncreasePoints = async (pointsToAdd: number, buttonId: string) => {
     if (!user) return
 
@@ -177,98 +137,70 @@ export default function Home() {
   if (!user) return <div className="container mx-auto p-4">Loading...</div>
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-3xl overflow-hidden shadow-lg">
-        <div className="bg-gray-200 h-32 rounded-b-[40px]"></div>
-        
-        <div className="px-6 py-4 -mt-16">
-          <div className="w-24 h-24 mx-auto bg-gray-400 rounded-3xl mb-4"></div>
-          
-          <h2 className="text-gray-800 text-2xl font-bold text-center mb-2">Welcome, {user.firstName}!</h2>
-          <p className="text-gray-600 text-center mb-6">Your current points: {user.points}</p>
-          
-          {user.invitedBy && (
-            <p className="text-gray-600 text-center mb-4">Invited by: {user.invitedBy}</p>
-          )}
-          
-          <div className="bg-gray-50 rounded-2xl p-4 mb-6">
-            <h3 className="text-gray-800 text-xl font-semibold mb-3">Daily Tasks</h3>
-            <div ref={scrollRef} className="max-h-40 overflow-y-auto pr-2 snap-y snap-mandatory">
-              <div className="space-y-2">
-                <div className="snap-start py-2">
-                  <div className="flex items-center justify-between bg-white rounded-full p-2 px-4 transition-all duration-300 hover:scale-105 focus:scale-105">
-                    <span className="text-gray-700 text-sm">Check YouTube</span>
-                    <button
-                      onClick={() => {
-                        if (buttonStage1 === 'check') {
-                          handleButtonClick1()
-                        } else if (buttonStage1 === 'claim') {
-                          handleClaim1()
-                        }
-                      }}
-                      disabled={buttonStage1 === 'claimed' || isLoading}
-                      className={`px-4 py-1 rounded-full text-sm ${
-                        buttonStage1 === 'check'
-                          ? 'bg-green-500 text-white'
-                          : buttonStage1 === 'claim'
-                          ? 'bg-orange-500 text-white'
-                          : 'bg-gray-200 text-gray-700'
-                      } ${buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''}`}
-                    >
-                      {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-                    </button>
-                  </div>
-                </div>
-                <div className="snap-start py-2">
-                  <div className="flex items-center justify-between bg-white rounded-full p-2 px-4 transition-all duration-300 hover:scale-105 focus:scale-105">
-                    <span className="text-gray-700 text-sm">Check Twitter</span>
-                    <button
-                      onClick={() => {
-                        handleButtonClick2()
-                        handleClaim2()
-                      }}
-                      disabled={buttonStage2 === 'claimed'}
-                      className={`px-4 py-1 rounded-full text-sm ${
-                        buttonStage2 === 'check'
-                          ? 'bg-green-500 text-white'
-                          : buttonStage2 === 'claim'
-                          ? 'bg-orange-500 text-white'
-                          : 'bg-gray-200 text-gray-700'
-                      } ${buttonStage2 === 'claimed' ? 'cursor-not-allowed' : ''}`}
-                    >
-                      {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
-                    </button>
-                  </div>
-                </div>
-                <div className="snap-start py-2">
-                  <div className="flex items-center justify-between bg-white rounded-full p-2 px-4 transition-all duration-300 hover:scale-105 focus:scale-105">
-                    <span className="text-gray-700 text-sm">Invite Friends</span>
-                    <button
-                      onClick={handleInvite}
-                      className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm"
-                    >
-                      Invite
-                    </button>
-                  </div>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <main className="flex-grow overflow-y-auto">
+        <div className="container mx-auto p-4 max-w-md">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-blue-500 h-32 flex items-end justify-center pb-4">
+              <div className="w-24 h-24 bg-gray-300 rounded-full border-4 border-white"></div>
+            </div>
+            
+            <div className="p-4">
+              <h1 className="text-2xl font-bold text-center mb-2">Welcome, {user.firstName}!</h1>
+              <p className="text-center text-gray-600 mb-4">Your current points: {user.points}</p>
+
+              {user.invitedBy && (
+                <p className="text-center text-gray-600 mb-4">Invited by: {user.invitedBy}</p>
+              )}
+
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <h2 className="text-xl font-semibold mb-3">Daily Tasks</h2>
+                <div className="space-y-3">
+                  <TaskButton
+                    label="Check YouTube"
+                    stage={buttonStage1}
+                    isLoading={isLoading}
+                    onClick={() => {
+                      if (buttonStage1 === 'check') handleButtonClick1();
+                      else if (buttonStage1 === 'claim') handleClaim1();
+                    }}
+                  />
+                  <TaskButton
+                    label="Check Twitter"
+                    stage={buttonStage2}
+                    onClick={() => {
+                      handleButtonClick2();
+                      handleClaim2();
+                    }}
+                  />
+                  <TaskButton
+                    label="Invite Friends"
+                    onClick={handleInvite}
+                    customClass="bg-blue-500 hover:bg-blue-600 text-white"
+                  />
                 </div>
               </div>
+
+              {invitedUsers.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-2">Invited Users:</h3>
+                  <ul className="list-disc pl-5 text-gray-600">
+                    {invitedUsers.map((invitedUser, index) => (
+                      <li key={index}>{invitedUser}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
-          
-          {invitedUsers.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-gray-800 text-xl font-semibold mb-2">Invited Users:</h3>
-              <ul className="list-disc pl-5 text-gray-600">
-                {invitedUsers.map((user, index) => (
-                  <li key={index}>{user}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          
+        </div>
+      </main>
+
+      <footer className="bg-white border-t border-gray-200">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex justify-around">
             {[
-              { icon: Home, label: 'Home' },
+              { icon: HomeIcon, label: 'Home' },
               { icon: Users, label: 'Friends' },
               { icon: Wallet, label: 'Wallet' }
             ].map(({ icon: Icon, label }) => (
@@ -279,13 +211,50 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </div>
+      </footer>
 
       {notification && (
-        <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
+        <div className="fixed bottom-16 left-0 right-0 mx-auto w-max px-4 py-2 bg-green-100 text-green-700 rounded-full shadow-lg">
           {notification}
         </div>
       )}
     </div>
-  )
+  );
+}
+
+interface TaskButtonProps {
+  label: string;
+  stage?: 'check' | 'claim' | 'claimed';
+  isLoading?: boolean;
+  onClick: () => void;
+  customClass?: string;
+}
+
+function TaskButton({ label, stage, isLoading, onClick, customClass }: TaskButtonProps) {
+  let buttonText = label;
+  let buttonClass = customClass || '';
+
+  if (stage) {
+    buttonText = isLoading ? 'Claiming...' : stage === 'check' ? 'Check' : stage === 'claim' ? 'Claim' : 'Claimed';
+    buttonClass = `${
+      stage === 'check'
+        ? 'bg-green-500 hover:bg-green-600 text-white'
+        : stage === 'claim'
+        ? 'bg-orange-500 hover:bg-orange-600 text-white'
+        : 'bg-gray-200 text-gray-700'
+    } ${stage === 'claimed' || isLoading ? 'cursor-not-allowed opacity-50' : ''}`;
+  }
+
+  return (
+    <div className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
+      <span className="text-gray-700">{label}</span>
+      <button
+        onClick={onClick}
+        disabled={stage === 'claimed' || isLoading}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${buttonClass}`}
+      >
+        {buttonText}
+      </button>
+    </div>
+  );
 }
