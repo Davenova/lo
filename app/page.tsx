@@ -27,7 +27,7 @@ export default function Home() {
   const scrollRef = useRef(null)
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current
+    const scrollContainer = scrollRef.current as HTMLElement | null;
     let isScrolling = false
     let startY: number;
 
