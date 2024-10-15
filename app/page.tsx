@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { WebApp } from '@twa-dev/types'
+import React from 'react'
 import { Home as HomeIcon, Users, Wallet } from 'lucide-react'
 
 declare global {
@@ -12,18 +13,20 @@ declare global {
   }
 }
 
-export default function Home() {
+export default function HomePage() {
   const [user, setUser] = useState<any>(null)
   const [inviterInfo, setInviterInfo] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [notification, setNotification] = useState('')
   const [inviteLink, setInviteLink] = useState('')
   const [invitedUsers, setInvitedUsers] = useState<string[]>([])
+
+  // State for both buttons
   const [buttonStage1, setButtonStage1] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage2, setButtonStage2] = useState<'check' | 'claim' | 'claimed'>('check')
-  const [isLoading, setIsLoading] = useState(false)
 
-  // ... (all other functions remain the same: handleIncreasePoints, handleButtonClick1, handleButtonClick2, handleClaim1, handleClaim2, handleInvite)
+  // New loading spinner state
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -64,6 +67,74 @@ export default function Home() {
     }
   }, [])
 
+  const handleIncreasePoints = async (pointsToAdd: number, buttonId: string) => {
+    if (!user) return
+
+    try {
+      const res = await fetch('/api/increase-points', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ telegramId: user.telegramId, pointsToAdd, buttonId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setUser({ ...user, points: data.points })
+        setNotification(`Points increased successfully! (+${pointsToAdd})`)
+        setTimeout(() => setNotification(''), 3000)
+      } else {
+        setError('Failed to increase points')
+      }
+    } catch {
+      setError('An error occurred while increasing points')
+    }
+  }
+
+  const handleButtonClick1 = () => {
+    if (buttonStage1 === 'check') {
+      window.open('https://youtu.be/xvFZjo5PgG0', '_blank')
+      setButtonStage1('claim')
+    }
+  }
+
+  const handleButtonClick2 = () => {
+    if (buttonStage2 === 'check') {
+      window.open('https://twitter.com', '_blank')
+      setButtonStage2('claim')
+    }
+  }
+
+  const handleClaim1 = () => {
+    if (buttonStage1 === 'claim') {
+      setIsLoading(true)
+      handleIncreasePoints(5, 'button1')
+      setTimeout(() => {
+        setButtonStage1('claimed')
+        setIsLoading(false)
+      }, 3000)
+    }
+  }
+
+  const handleClaim2 = () => {
+    if (buttonStage2 === 'claim') {
+      handleIncreasePoints(3, 'button2')
+      setButtonStage2('claimed')
+    }
+  }
+
+  const handleInvite = () => {
+    if (inviteLink) {
+      navigator.clipboard.writeText(inviteLink).then(() => {
+        setNotification('Invite link copied to clipboard!')
+        setTimeout(() => setNotification(''), 3000)
+      }).catch(err => {
+        console.error('Failed to copy: ', err)
+        setNotification('Failed to copy invite link. Please try again.')
+      })
+    }
+  }
+
   if (error) {
     return <div className="container mx-auto p-4 text-red-500">{error}</div>
   }
@@ -72,99 +143,108 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg overflow-hidden shadow-lg">
-        <div className="p-4">
-          <h1 className="text-2xl font-bold text-center mb-4">Welcome, {user.firstName}!</h1>
-          <p className="text-center text-gray-600 mb-4">Your current points: {user.points}</p>
+      <div className="w-full max-w-md bg-white rounded-3xl overflow-hidden shadow-lg">
+        <div className="bg-gray-200 h-32 rounded-b-[40px]"></div>
 
-          {user.invitedBy && (
-            <p className="text-center text-gray-600 mb-4">Invited by: {user.invitedBy}</p>
-          )}
+        <div className="px-6 py-4 -mt-16">
+          <div className="w-24 h-24 mx-auto bg-gray-400 rounded-3xl mb-4"></div>
 
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <h2 className="text-xl font-semibold mb-3">Daily Tasks</h2>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
-                <span className="text-gray-700">Check YouTube</span>
+          <h2 className="text-gray-800 text-2xl font-bold text-center mb-6">Welcome, {user.firstName}!</h2>
+
+          <div className="bg-gray-50 rounded-2xl p-4 mb-6">
+            <h3 className="text-gray-800 text-xl font-semibold mb-3">Daily Tasks...!</h3>
+
+            <div className="space-y-2">
+              {/* Button 1 for YouTube */}
+              <div className="flex items-center justify-between bg-white rounded-full p-2 px-4">
+                <span className="text-gray-700 text-sm">Follow Our Youtube!</span>
                 <button
                   onClick={() => {
-                    if (buttonStage1 === 'check') handleButtonClick1();
-                    else if (buttonStage1 === 'claim') handleClaim1();
+                    if (buttonStage1 === 'check') handleButtonClick1()
+                    else if (buttonStage1 === 'claim') handleClaim1()
                   }}
                   disabled={buttonStage1 === 'claimed' || isLoading}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                    buttonStage1 === 'check'
-                      ? 'bg-green-500 text-white'
-                      : buttonStage1 === 'claim'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-200 text-gray-700'
-                  } ${buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed opacity-50' : ''}`}
+                  className={`bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm ${
+                    buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
+                  }`}
                 >
                   {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
                 </button>
               </div>
-              <div className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
-                <span className="text-gray-700">Check Twitter</span>
+
+              {/* Button 2 for Twitter */}
+              <div className="flex items-center justify-between bg-white rounded-full p-2 px-4">
+                <span className="text-gray-700 text-sm">Follow Our Twitter!</span>
                 <button
                   onClick={() => {
-                    handleButtonClick2();
-                    handleClaim2();
+                    handleButtonClick2()
+                    handleClaim2()
                   }}
                   disabled={buttonStage2 === 'claimed'}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                    buttonStage2 === 'check'
-                      ? 'bg-green-500 text-white'
-                      : buttonStage2 === 'claim'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-200 text-gray-700'
-                  } ${buttonStage2 === 'claimed' ? 'cursor-not-allowed opacity-50' : ''}`}
+                  className={`bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm ${
+                    buttonStage2 === 'claimed' ? 'cursor-not-allowed' : ''
+                  }`}
                 >
-                  {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
-                </button>
-              </div>
-              <div className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
-                <span className="text-gray-700">Invite Friends</span>
-                <button
-                  onClick={handleInvite}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-500 text-white"
-                >
-                  Invite
+                  {buttonStage2 === 'check' && 'Check'}
+                  {buttonStage2 === 'claim' && 'Claim'}
+                  {buttonStage2 === 'claimed' && 'Claimed'}
                 </button>
               </div>
             </div>
           </div>
 
+          {/* Invited By Section */}
+          {user.invitedBy && (
+            <div className="text-center mb-4">
+              <p>Invited by: {user.invitedBy}</p>
+            </div>
+          )}
+
+          {/* Invite Button */}
+          <div className="py-2 px-4 rounded mt-4 bg-blue-500 hover:bg-blue-700">
+            <button
+              onClick={handleInvite}
+              className="w-full text-white font-bold py-2 rounded"
+            >
+              Invite
+            </button>
+          </div>
+
+          {/* Invited Users List */}
           {invitedUsers.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-2">Invited Users:</h3>
-              <ul className="list-disc pl-5 text-gray-600">
-                {invitedUsers.map((invitedUser, index) => (
-                  <li key={index}>{invitedUser}</li>
+            <div className="mt-4">
+              <h2 className="text-xl font-bold mb-2">Invited Users:</h2>
+              <ul className="list-disc pl-5">
+                {invitedUsers.map((user, index) => (
+                  <li key={index}>{user}</li>
                 ))}
               </ul>
             </div>
           )}
 
+          {notification && (
+            <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
+              {notification}
+            </div>
+          )}
+
+          {/* Bottom Navigation */}
           <div className="flex justify-around mt-6">
-            {[
-              { icon: HomeIcon, label: 'Home' },
-              { icon: Users, label: 'Friends' },
-              { icon: Wallet, label: 'Wallet' }
-            ].map(({ icon: Icon, label }) => (
-              <button key={label} className="flex flex-col items-center">
-                <Icon size={24} className="text-gray-400" />
-                <span className="text-xs text-gray-400 mt-1">{label}</span>
-              </button>
-            ))}
+            <button className="flex flex-col items-center">
+              <Home size={24} className="text-gray-400" />
+              <span className="text-xs text-gray-400 mt-1">Home</span>
+            </button>
+            <button className="flex flex-col items-center">
+              <Users size={24} className="text-gray-400" />
+              <span className="text-xs text-gray-400 mt-1">Friends</span>
+            </button>
+            <button className="flex flex-col items-center">
+              <Wallet size={24} className="text-gray-400" />
+              <span className="text-xs text-gray-400 mt-1">Wallet</span>
+            </button>
           </div>
         </div>
       </div>
-
-      {notification && (
-        <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
-          {notification}
-        </div>
-      )}
     </div>
   )
 }
