@@ -191,24 +191,19 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Invite Button */}
-      <div className="py-2 px-4 rounded mt-4 bg-blue-500 hover:bg-blue-700">
-        <Link href="/invite">
-          <a>
-            <button
-              className="w-full text-white font-bold py-2 rounded"
-            >
-              Invite
-            </button>
-          </a>
-        </Link>
-      </div>
-
       {notification && (
         <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
           {notification}
         </div>
       )}
+
+      {/* New Invite Navigation at the bottom */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-blue-500 p-4">
+        <Link href="/invite">
+          <a className="block text-center text-white font-bold">
+            Invite Friends
+          </a>
+        </Link>
+      </nav>
     </div>
   )
-}
