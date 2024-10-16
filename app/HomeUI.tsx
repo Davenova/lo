@@ -104,18 +104,17 @@ export default function HomeUI({
       </p>
       <div className="footer-container">
         <Link href="/" className="footer-link">
-  <i className="fas fa-home footer-icon"></i>
+  <i className="bi bi-house footer-icon"></i>
   <p className="footer-text">Home</p>
 </Link>
 <Link href="/invite" className="footer-link">
-  <i className="fas fa-users footer-icon"></i>
+  <i className="bi bi-people footer-icon"></i>
   <p className="footer-text">Friends</p>
 </Link>
 <Link href="/wallet" className="footer-link">
-  <i className="fas fa-wallet footer-icon"></i>
+  <i className="bi bi-wallet footer-icon"></i>
   <p className="footer-text">Wallet</p>
 </Link>
-
       </div>
     </div>
   );
