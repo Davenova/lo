@@ -89,7 +89,7 @@ export default function Home() {
     }
   }
 
-  const handle ButtonClick2 = () => {
+  const handleButtonClick2 = () => {
     if (buttonStage2 === 'check') {
       window.open('https://twitter.com', '_blank')
       setButtonStage2('claim')
