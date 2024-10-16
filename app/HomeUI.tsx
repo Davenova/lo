@@ -24,12 +24,12 @@ export default function HomeUI({
   handleClaim2
 }: HomeUIProps) {
   return (
-    <div className="bg-gray-700 flex flex-col items-center justify-between h-screen">
+    <div className="bg-gray-700 flex flex-col items-center justify-between min-h-screen">
       {/* Top Section */}
-      <div className="bg-white w-full flex flex-col items-center justify-start h-3/4">
-        <div className="flex flex-col items-center mt-10">
+      <div className="bg-white w-full flex flex-col items-center justify-start flex-1">
+        <div className="flex flex-col items-center mt-10 w-full">
           {/* Profile Image */}
-          <div className="w-64 h-64 bg-gray-700 rounded-full overflow-hidden">
+          <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-gray-700 rounded-full overflow-hidden">
             <img
               alt="Profile Image"
               className="w-full h-full object-cover"
@@ -37,18 +37,18 @@ export default function HomeUI({
             />
           </div>
           {/* User Points */}
-          <p className="mt-4 text-xl font-bold mb-24">{user.points.toLocaleString()} PixelDogs</p>
+          <p className="mt-4 text-lg sm:text-xl md:text-2xl font-bold mb-12">{user.points.toLocaleString()} PixelDogs</p>
         </div>
 
         {/* Daily Tasks */}
         <div className="bg-gray-700 w-full max-w-md p-4 rounded-t-3xl">
-          <div className="bg-gray-200 text-center py-2 rounded-full mb-4 w-2/5 mx-auto">
-            <p className="font-bold">Daily Tasks..!</p>
+          <div className="bg-gray-200 text-center py-2 rounded-full mb-4 w-3/5 sm:w-2/5 mx-auto">
+            <p className="font-bold text-sm sm:text-base">Daily Tasks..!</p>
           </div>
 
           {/* Task 1 */}
-          <div className="flex justify-between items-center bg-gray-200 p-2 rounded-full mb-2">
-            <p className="ml-2 font-bold">Follow Our Youtube!</p>
+          <div className="flex justify-between items-center bg-gray-200 p-3 rounded-lg mb-3 w-full">
+            <p className="font-bold text-sm sm:text-base">Follow Our Youtube!</p>
             <button
               onClick={() => {
                 if (buttonStage1 === 'check') {
@@ -57,7 +57,7 @@ export default function HomeUI({
                   handleClaim1();
                 }
               }}
-              className={`bg-gray-700 text-white px-4 py-1 rounded-full mr-2 ${
+              className={`bg-gray-700 text-white px-3 sm:px-4 py-1 rounded-full ${
                 isLoading ? 'cursor-not-allowed' : ''
               }`}
               disabled={buttonStage1 === 'claimed' || isLoading}
@@ -67,8 +67,8 @@ export default function HomeUI({
           </div>
 
           {/* Task 2 */}
-          <div className="flex justify-between items-center bg-gray-200 p-2 rounded-full">
-            <p className="ml-2 font-bold">Follow Our Twitter!</p>
+          <div className="flex justify-between items-center bg-gray-200 p-3 rounded-lg w-full">
+            <p className="font-bold text-sm sm:text-base">Follow Our Twitter!</p>
             <button
               onClick={() => {
                 if (buttonStage2 === 'check') {
@@ -77,7 +77,7 @@ export default function HomeUI({
                   handleClaim2();
                 }
               }}
-              className={`bg-gray-700 text-white px-4 py-1 rounded-full mr-2 ${
+              className={`bg-gray-700 text-white px-3 sm:px-4 py-1 rounded-full ${
                 buttonStage2 === 'claimed' ? 'cursor-not-allowed' : ''
               }`}
               disabled={buttonStage2 === 'claimed'}
@@ -96,18 +96,18 @@ export default function HomeUI({
       </div>
 
       {/* Bottom Navigation */}
-      <div className="bg-gray-800 w-full py-4 flex justify-around items-center text-white border-t-4">
+      <div className="bg-gray-800 w-full py-4 flex justify-around items-center text-white">
         <Link href="/home" className="flex flex-col items-center">
           <i className="fas fa-home text-xl"></i>
-          <p className="text-xs">Home</p>
+          <p className="text-xs sm:text-sm">Home</p>
         </Link>
         <Link href="/friends" className="flex flex-col items-center">
           <i className="fas fa-users text-xl"></i>
-          <p className="text-xs">Friends</p>
+          <p className="text-xs sm:text-sm">Friends</p>
         </Link>
         <Link href="/tasks" className="flex flex-col items-center">
           <i className="fas fa-tasks text-xl"></i>
-          <p className="text-xs">Tasks</p>
+          <p className="text-xs sm:text-sm">Tasks</p>
         </Link>
       </div>
     </div>
