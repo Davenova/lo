@@ -74,46 +74,48 @@ export default function Invite() {
   if (!user) return <div className="container mx-auto p-4">Loading...</div>
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Invite Friends</h1>
+    <div className="flex flex-col min-h-screen">
+      <div className="container mx-auto p-4 flex-grow">
+        <h1 className="text-2xl font-bold mb-4 text-center">Invite Friends</h1>
 
-      {/* Add a new section to display the invitedBy data */}
-      {user.invitedBy && (
-        <div className="text-center mb-4">
-          <p>Invited by: {user.invitedBy}</p>
+        {/* Add a new section to display the invitedBy data */}
+        {user.invitedBy && (
+          <div className="text-center mb-4">
+            <p>Invited by: {user.invitedBy}</p>
+          </div>
+        )}
+
+        {/* Invite Button */}
+        <div className="py-2 px-4 rounded mt-4 bg-blue-500 hover:bg-blue-700">
+          <button
+            onClick={handleInvite}
+            className="w-full text-white font-bold py-2 rounded"
+          >
+            Copy Invite Link
+          </button>
         </div>
-      )}
 
-      {/* Invite Button */}
-      <div className="py-2 px-4 rounded mt-4 bg-blue-500 hover:bg-blue-700">
-        <button
-          onClick={handleInvite}
-          className="w-full text-white font-bold py-2 rounded"
-        >
-          Copy Invite Link
-        </button>
+        {/* Invited Users List */}
+        {invitedUsers.length > 0 && (
+          <div className="mt-4">
+            <h2 className="text-xl font-bold mb-2">Invited Users:</h2>
+            <ul className="list-disc pl-5">
+              {invitedUsers.map((user, index) => (
+                <li key={index}>{user}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {notification && (
+          <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
+            {notification}
+          </div>
+        )}
       </div>
 
-      {/* Invited Users List */}
-      {invitedUsers.length > 0 && (
-        <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2">Invited Users:</h2>
-          <ul className="list-disc pl-5">
-            {invitedUsers.map((user, index) => (
-              <li key={index}>{user}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {notification && (
-        <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
-          {notification}
-        </div>
-      )}
-
       {/* Bottom Navigation */}
-      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg mt-4">
+      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
         <Link href="/">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-home text-2xl"></i>
