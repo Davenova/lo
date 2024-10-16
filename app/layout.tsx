@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
-import Buttons from './buttons'; // Import the Buttons component
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +17,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script src="https://cdn.tailwindcss.com"></Script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+          body {
+            font-family: 'Fredoka One', cursive;
+          }
+          .glow-blue-on-hover:hover {
+            box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.5);
+            transform: scale(1.05);
+          }
+          .glow-green-on-hover:hover {
+            box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5);
+            transform: scale(1.05);
+          }
+          .glow-pink-on-hover:hover {
+            box-shadow: 0 0 15px 5px rgba(255, 20, 147, 0.5);
+            transform: scale(1.05);
+          }
+        </style>
+      </head>
       <body className={inter.className}>
-        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
-        <Buttons /> {/* Using the Buttons component */}
         {children}
       </body>
     </html>
