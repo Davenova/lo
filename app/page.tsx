@@ -130,7 +130,7 @@ export default function Home() {
         <div className="bg-gray-300 w-24 h-24 rounded-full mb-4"></div>
         <p className="text-gray-800 text-2xl font-bold mb-12 mt-4">{user.points} PixelDogs</p>
         <div className="bg-white w-10/12 pt-6 pb-6 px-12 rounded-lg flex flex-col items-center shadow-md mt-12">
-          <div className="bg-gray-200 text-center py-2  rounded-full mb-4 w-2/3 mx-auto">
+          <div className="bg-gray-200 text-center py-2 rounded-full mb-4 w-2/3 mx-auto">
             <p className="font-bold text-gray-600">Daily Tasks..!</p>
           </div>
           <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-pink-on-hover transition duration-300">
@@ -141,22 +141,22 @@ export default function Home() {
               disabled={buttonStage1 === 'claimed'}
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+            </button>
           </div>
           <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-green-on-hover transition duration-300">
             <p className="text-gray-800">Follow Our Twitter!</p>
             <button
-              className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+              className={`bg-gray-300 text-gray-800 px-4 py-2 rounded-lg ${
+                buttonStage2 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
+              }`}
               onClick={() => {
-            if (buttonStage1 === 'check') {
-              handleButtonClick1()
-            } else if (buttonStage1 === 'claim') {
-              handleClaim1()
-            }
-          }}
-              disabled={buttonStage1 === 'claimed' || isLoading}
-          className={`w-full text-white font-bold py-2 rounded ${
-            buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
-          }`}
+                if (buttonStage2 === 'check') {
+                  handleButtonClick2()
+                } else if (buttonStage2 === 'claim') {
+                  handleClaim2()
+                }
+              }}
+              disabled={buttonStage2 === 'claimed' || isLoading}
             >
               {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
@@ -189,10 +189,10 @@ export default function Home() {
         <Link href="/invite">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-users text-2xl"></i>
-            <p className="text-sm">Friends</p>
+            <p className="text-sm">Invite</p>
           </a>
         </Link>
-        <Link href="/invite">
+        <Link href="/wallet">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-wallet text-2xl"></i>
             <p className="text-sm">Wallet</p>
