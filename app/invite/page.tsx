@@ -77,7 +77,7 @@ export default function Invite() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Invite Friends</h1>
 
-      {/* Display the invitedBy data */}
+      {/* Add a new section to display the invitedBy data */}
       {user.invitedBy && (
         <div className="text-center mb-4">
           <p>Invited by: {user.invitedBy}</p>
@@ -98,7 +98,7 @@ export default function Invite() {
       {invitedUsers.length > 0 && (
         <div className="mt-4">
           <h2 className="text-xl font-bold mb-2">Invited Users:</h2>
-           <ul className="list-disc pl-5">
+          <ul className="list-disc pl-5">
             {invitedUsers.map((user, index) => (
               <li key={index}>{user}</li>
             ))}
