@@ -111,5 +111,27 @@ export default function Invite() {
         </div>
       )}
     </div>
+
+    {/* Bottom Navigation */}
+      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
+        <Link href="/">
+          <a className="flex flex-col items-center text-gray-800">
+            <i className="fas fa-home text-2xl"></i>
+            <p className="text-sm">Home</p>
+          </a>
+        </Link>
+        <Link href="/invite">
+          <a className="flex flex-col items-center text-gray-800">
+            <i className="fas fa-users text-2xl"></i>
+            <p className="text-sm">Friends</p>
+          </a>
+        </Link>
+        <Link href="/wallet">
+          <a className="flex flex-col items-center text-gray-800">
+            <i className="fas fa-wallet text-2xl"></i>
+            <p className="text-sm">Wallet</p>
+          </a>
+        </Link>
+      </div>
   )
 }
