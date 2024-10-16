@@ -89,7 +89,7 @@ export default function Home() {
     }
   }
 
-  const handleButtonClick2 = () => {
+  const handle ButtonClick2 = () => {
     if (buttonStage2 === 'check') {
       window.open('https://twitter.com', '_blank')
       setButtonStage2('claim')
@@ -100,9 +100,9 @@ export default function Home() {
     if (buttonStage1 === 'claim') {
       setIsLoading(true)
       handleIncreasePoints(5, 'button1')
-      setTimeout (() => {
+      setTimeout(() => {
         setButtonStage1('claimed')
-        setIs Loading(false)
+        setIsLoading(false)
       }, 3000)
     }
   }
