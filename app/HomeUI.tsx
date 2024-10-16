@@ -36,15 +36,9 @@ export default function HomeUI({
         </div>
       )}
 
-      <div
-        className={`py-1 px-2 rounded mt-4 ${ // Adjusted padding for a smaller button
-          buttonStage1 === 'check'
-            ? 'bg-green-500 hover:bg-green-700'
-            : buttonStage1 === 'claim'
-            ? 'bg-orange-500 hover:bg-orange-700'
-            : 'bg-lightblue'
-        }`}
-      >
+      {/* Button 1 styling based on the provided layout */}
+      <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-pink-on-hover transition duration-300">
+        <p className="text-gray-800">Follow Our Youtube!</p>
         <button
           onClick={() => {
             if (buttonStage1 === 'check') {
@@ -54,7 +48,7 @@ export default function HomeUI({
             }
           }}
           disabled={buttonStage1 === 'claimed' || isLoading}
-          className={`w-full text-white font-bold py-1 text-sm rounded ${ // Adjusted padding and font size
+          className={`bg-gray-300 text-gray-800 px-4 py-2 rounded-lg ${
             buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
           }`}
         >
@@ -62,6 +56,7 @@ export default function HomeUI({
         </button>
       </div>
 
+      {/* Button 2 remains the same */}
       <div
         className={`py-2 px-4 rounded mt-4 ${
           buttonStage2 === 'check'
