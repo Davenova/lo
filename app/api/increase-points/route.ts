@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
         const claimedField = 
             buttonId === 'button1' ? 'claimedButton1' : 
             buttonId === 'button2' ? 'claimedButton2' : 
-            buttonId === 'button3' ? 'claimedButton3';
+            buttonId === 'button3' ? 'claimedButton3'
 
         const updatedUser = await prisma.user.update({
             where: { telegramId },
