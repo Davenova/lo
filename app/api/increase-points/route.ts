@@ -10,7 +10,14 @@ export async function POST(req: NextRequest) {
         }
 
         // Define claimed field based on buttonId
-        const claimedField = buttonId === 'button1' ? 'claimedButton1' : 'claimedButton2' : 'claimedButton3';
+        let claimedField;
+        if (buttonId === 'button1') {
+            claimedField = 'claimedButton1';
+        } else if (buttonId === 'button2') {
+            claimedField = 'claimedButton2';
+        } else if (buttonId === 'button3') {
+            claimedField = 'claimedButton3';
+        }
 
         const updatedUser = await prisma.user.update({
             where: { telegramId },
