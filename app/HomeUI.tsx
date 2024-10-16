@@ -4,24 +4,30 @@ interface HomeUIProps {
   user: any;
   buttonStage1: 'check' | 'claim' | 'claimed';
   buttonStage2: 'check' | 'claim' | 'claimed';
+  buttonStage3: 'check' | 'claim' | 'claimed';
   isLoading: boolean;
   notification: string;
   handleButtonClick1: () => void;
   handleButtonClick2: () => void;
+  handleButtonClick3: () => void;
   handleClaim1: () => void;
   handleClaim2: () => void;
+  handleClaim3: () => void;
 }
 
 export default function HomeUI({
   user,
   buttonStage1,
   buttonStage2,
+  buttonStage3,
   isLoading,
   notification,
   handleButtonClick1,
   handleButtonClick2,
+  handleButtonClick3,
   handleClaim1,
-  handleClaim2
+  handleClaim2,
+  handleClaim3
 }: HomeUIProps) {
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-between min-h-screen">
@@ -68,6 +74,21 @@ export default function HomeUI({
               className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
             >
               {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
+            </button>
+          </div>
+
+          {/* Button 3 */}
+          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-green-on-hover transition duration-300">
+            <p className="text-gray-800">Follow Our Telegram!</p>
+            <button
+              onClick={() => {
+                handleButtonClick3()
+                handleClaim3()
+              }}
+              disabled={buttonStage3 === 'claimed'}
+              className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
+            >
+              {buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
         </div>
