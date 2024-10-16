@@ -10,13 +10,18 @@ export async function POST(req: NextRequest) {
         }
 
         // Define claimed field based on buttonId
-        let claimedField;
+        let claimedField: string | null = null;
         if (buttonId === 'button1') {
             claimedField = 'claimedButton1';
         } else if (buttonId === 'button2') {
             claimedField = 'claimedButton2';
         } else if (buttonId === 'button3') {
             claimedField = 'claimedButton3';
+        }
+
+        // Check if claimedField is valid
+        if (!claimedField) {
+            return NextResponse.json({ error: 'Invalid buttonId' }, { status: 400 });
         }
 
         const updatedUser = await prisma.user.update({
