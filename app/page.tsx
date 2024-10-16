@@ -140,15 +140,23 @@ export default function Home() {
               onClick={handleButtonClick1}
               disabled={buttonStage1 === 'claimed'}
             >
-              {buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
-             </button>
+              {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
           </div>
           <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-green-on-hover transition duration-300">
             <p className="text-gray-800">Follow Our Twitter!</p>
             <button
               className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
-              onClick={handleButtonClick2}
-              disabled={buttonStage2 === 'claimed'}
+              onClick={() => {
+            if (buttonStage1 === 'check') {
+              handleButtonClick1()
+            } else if (buttonStage1 === 'claim') {
+              handleClaim1()
+            }
+          }}
+              disabled={buttonStage1 === 'claimed' || isLoading}
+          className={`w-full text-white font-bold py-2 rounded ${
+            buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
+          }`}
             >
               {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
