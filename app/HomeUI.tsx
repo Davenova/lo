@@ -32,12 +32,12 @@ export default function HomeUI({
 
       {user.invitedBy && (
         <div className="text-center mb-4">
-           <p>Invited by: {user.invitedBy}</p>
+          <p>Invited by: {user.invitedBy}</p>
         </div>
       )}
 
       <div
-        className={`py-2 px-4 rounded mt-4 ${
+        className={`py-1 px-2 rounded mt-4 ${ // Adjusted padding for a smaller button
           buttonStage1 === 'check'
             ? 'bg-green-500 hover:bg-green-700'
             : buttonStage1 === 'claim'
@@ -54,7 +54,7 @@ export default function HomeUI({
             }
           }}
           disabled={buttonStage1 === 'claimed' || isLoading}
-          className={`w-full text-white font-bold py-2 rounded ${
+          className={`w-full text-white font-bold py-1 text-sm rounded ${ // Adjusted padding and font size
             buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
           }`}
         >
