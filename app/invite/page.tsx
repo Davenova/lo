@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link' // Ensure you are importing the Link component
 import { WebApp } from '@twa-dev/types'
 
 declare global {
@@ -76,7 +77,7 @@ export default function Invite() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Invite Friends</h1>
 
-      {/* Add a new section to display the invitedBy data */}
+      {/* Display the invitedBy data */}
       {user.invitedBy && (
         <div className="text-center mb-4">
           <p>Invited by: {user.invitedBy}</p>
@@ -110,10 +111,9 @@ export default function Invite() {
           {notification}
         </div>
       )}
-    </div>
 
-    {/* Bottom Navigation */}
-      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
+      {/* Bottom Navigation */}
+      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg mt-4">
         <Link href="/">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-home text-2xl"></i>
@@ -133,5 +133,6 @@ export default function Invite() {
           </a>
         </Link>
       </div>
+    </div>
   )
 }
