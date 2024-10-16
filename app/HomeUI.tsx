@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { toggleUpdateText } from './utils'; // Import the function from utils.js
+import './HomeUI.css'; // Import your CSS file
 
 interface HomeUIProps {
   user: any;
@@ -36,24 +37,22 @@ export default function HomeUI({
   }, []);
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center justify-between min-h-screen">
-      <div className="bg-gray-200 w-full h-1/2 rounded-b-full flex flex-col items-center justify-center shadow-lg">
-        <div className="bg-gray-300 w-32 h-32 rounded-full shadow-md drag-down">
+    <div className="home-container">
+      <div className="header-container">
+        <div className="dog-image-container">
           <img
             alt="Animated style dog image"
-            className="w-full h-full rounded-full object-cover"
+            className="dog-image"
             src="https://storage.googleapis.com/a1aa/image/YlpvEfbklKRiDi8LX5Rww5U3zZZwHEUfju1qUNknpEZ6e2OnA.jpg"
           />
         </div>
-        <p id="pixelDogsCount" className="text-gray-700 text-3xl mt-4 font-bold">
+        <p id="pixelDogsCount" className="pixel-dogs-count">
           {user.points} PixelDogs
         </p>
-        <div className="bg-gray-100 w-3/4 mt-4 p-6 rounded-lg flex flex-col items-center shadow-md">
-          <button className="bg-gray-200 text-gray-700 px-6 py-2 rounded-full mb-4 font-semibold shadow-sm hover:bg-gray-300 transition duration-300">
-            Daily Tasks..!
-          </button>
-          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 shadow-sm glow-on-hover transition duration-300">
-            <p className="text-gray-700 font-medium">Follow Our Youtube!</p>
+        <div className="tasks-container">
+          <button className="tasks-button">Daily Tasks..!</button>
+          <div className="social-container">
+            <p className="social-text">Follow Our Youtube!</p>
             <button
               onClick={() => {
                 if (buttonStage1 === 'check') {
@@ -63,35 +62,35 @@ export default function HomeUI({
                 }
               }}
               disabled={buttonStage1 === 'claimed' || isLoading}
-              className={`bg-gray-300 text-gray-700 px-4 py-1 rounded-full font-semibold shadow-sm ${
-                buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : 'hover:bg-gray-400 transition duration-300'
+              className={`claim-button ${
+                buttonStage1 === 'claimed' || isLoading ? 'disabled' : ''
               }`}
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
-          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 shadow-sm glow-green-on-hover transition duration-300">
-            <p className="text-gray-700 font-medium">Follow Our Twitter!</p>
+          <div className="social-container">
+            <p className="social-text">Follow Our Twitter!</p>
             <button
               onClick={() => {
                 handleButtonClick2();
                 handleClaim2();
               }}
               disabled={buttonStage2 === 'claimed'}
-              className="bg-gray-300 text-gray-700 px-4 py-1 rounded-full font-semibold shadow-sm hover:bg-gray-400 transition duration-300"
+              className="claim-button"
             >
               {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
-          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center shadow-sm glow-blue-on-hover transition duration-300">
-            <p className="text-gray-700 font-medium">Join Our Telegram!</p>
+          <div className="social-container">
+            <p className="social-text">Join Our Telegram!</p>
             <button
               onClick={() => {
                 handleButtonClick3();
                 handleClaim3();
               }}
               disabled={buttonStage3 === 'claimed'}
-              className="bg-gray-300 text-gray-700 px-4 py-1 rounded-full font-semibold shadow-sm hover:bg-gray-400 transition duration-300"
+              className="claim-button"
             >
               {buttonStage3 === 'check' ? 'Check' : buttonStage3 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
@@ -99,29 +98,27 @@ export default function HomeUI({
         </div>
       </div>
       <div className="flex-grow"></div>
-      <button className="bg-gray-800 text-white w-3/4 py-4 rounded-full mb-6 font-semibold text-lg shadow-sm hover:bg-gray-900 transition duration-300">
-        Farm PixelDogs...
-      </button>
-      <p id="updateText" className="text-gray-700 text-center mb-4 fade fade-in text-sm">
+      <button className="farm-button">Farm PixelDogs...</button>
+      <p id="updateText" className="update-text fade fade-in">
         Exciting updates are on the way, keep farming :)
       </p>
-      <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
+      <div className="footer-container">
         <Link href="/">
-          <a className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition duration-300">
-            <i className="fas fa-home text-2xl"></i>
-            <p className="font-medium">Home</p>
+          <a className="footer-link">
+            <i className="fas fa-home footer-icon"></i>
+            <p className="footer-text">Home</p>
           </a>
         </Link>
         <Link href="/invite">
-          <a className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition duration-300">
-            <i className="fas fa-users text-2xl"></i>
-            <p className="font-medium">Friends</p>
+          <a className="footer-link">
+            <i className="fas fa-users footer-icon"></i>
+            <p className="footer-text">Friends</p>
           </a>
         </Link>
         <Link href="/wallet">
-          <a className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition duration-300">
-            <i className="fas fa-wallet text-2xl"></i>
-            <p className="font-medium">Wallet</p>
+          <a className="footer-link">
+            <i className="fas fa-wallet footer-icon"></i>
+            <p className="footer-text">Wallet</p>
           </a>
         </Link>
       </div>
