@@ -80,7 +80,7 @@ export default function HomeUI({
 
       {/* Bottom Navigation */}
       <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
-        <Link href="/home">
+        <Link href="/">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-home text-2xl"></i>
             <p className="text-sm">Home</p>
