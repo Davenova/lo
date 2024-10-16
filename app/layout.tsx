@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script src="https://cdn.tailwindcss.com"></Script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
-        <style>
+        <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+        <style dangerouslySetInnerHTML={{__html: `
           @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
           body {
             font-family: 'Fredoka One', cursive;
@@ -37,7 +37,7 @@ export default function RootLayout({
             box-shadow: 0 0 15px 5px rgba(255, 20, 147, 0.5);
             transform: scale(1.05);
           }
-        </style>
+        `}} />
       </head>
       <body className={inter.className}>
         {children}
