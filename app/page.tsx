@@ -124,7 +124,7 @@ export default function Home() {
 
   if (!user) return <div className="container mx-auto p-4">Loading...</div>
 
-  return (
+   return (
     <div className="bg-gray-100 flex flex-col items-center justify-between min-h-screen">
       <div className="bg-white w-full h-3/4 rounded-b-full flex flex-col items-center justify-center shadow-lg">
         <div className="bg-gray-300 w-24 h-24 rounded-full mb-4"></div>
@@ -140,35 +140,17 @@ export default function Home() {
               onClick={handleButtonClick1}
               disabled={buttonStage1 === 'claimed'}
             >
-              {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+              {buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
           <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 glow-green-on-hover transition duration-300">
-            <p className="text-gray-800">Follow Our Twitter!</p>
-            <button
-              className={`bg-gray-300 text-gray-800 px-4 py-2 rounded-lg ${
-                buttonStage2 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
-              }`}
-              onClick={() => {
-                if (buttonStage2 === 'check') {
-                  handleButtonClick2()
-                } else if (buttonStage2 === 'claim') {
-                  handleClaim2()
-                }
-              }}
-              disabled={buttonStage2 === 'claimed' || isLoading}
-            >
-              {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
-            </button>
-          </div>
-          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center glow-blue-on-hover transition duration-300">
-            <p className="text-gray-800">Join Our Telegram!</p>
+            <p className="text-gray-800">Follow Our Twitter !</p>
             <button
               className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
-              onClick={handleClaim1}
-              disabled={buttonStage1 === 'claimed' || isLoading}
+              onClick={handleButtonClick2}
+              disabled={buttonStage2 === 'claimed'}
             >
-              {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
+              {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
         </div>
@@ -189,10 +171,10 @@ export default function Home() {
         <Link href="/invite">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-users text-2xl"></i>
-            <p className="text-sm">Invite</p>
+            <p className="text-sm">Friends</p>
           </a>
         </Link>
-        <Link href="/wallet">
+        <Link href="/invite">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-wallet text-2xl"></i>
             <p className="text-sm">Wallet</p>
