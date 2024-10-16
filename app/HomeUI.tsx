@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { toggleUpdateText } from './utils'; // Import the function from utils.js
 
 interface HomeUIProps {
   user: any;
@@ -28,59 +29,29 @@ export default function HomeUI({
   handleButtonClick3,
   handleClaim1,
   handleClaim2,
-  handleClaim3
+  handleClaim3,
 }: HomeUIProps) {
   useEffect(() => {
-    toggleUpdateText(); // Call the function from the script
+    toggleUpdateText(); // Call the function to toggle update text
   }, []);
-
-  function getRandomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function toggleUpdateText() {
-    const updateTextElement = document.getElementById('updateText');
-    const texts = [
-      "Exciting updates are on the way, keep farming :)",
-      "Stay healthy and stay alive for future events :)",
-      "Join our socials for latest updates",
-      "Only follow news shared in our official platforms",
-      "You’re part of something special, stay connected for surprises!",
-      "Big things are growing, keep your eyes on the field!",
-      "Hold tight! The best surprises are worth the wait!",
-      "Behind the scenes, we’re working on something you’ll love!"
-    ];
-    let previousIndex = -1;
-
-    setInterval(() => {
-      let randomIndex;
-      do {
-        randomIndex = getRandomInt(0, texts.length - 1);
-      } while (randomIndex === previousIndex);
-
-      previousIndex = randomIndex;
-
-      if (updateTextElement) {
-        updateTextElement.classList.remove('fade-in');
-        updateTextElement.classList.add('fade-out');
-        setTimeout(() => {
-          updateTextElement.textContent = texts[randomIndex];
-          updateTextElement.classList.remove('fade-out');
-          updateTextElement.classList.add('fade-in');
-        }, 1000);
-      }
-    }, 15000);
-  }
 
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-between min-h-screen">
       <div className="bg-gray-200 w-full h-1/2 rounded-b-full flex flex-col items-center justify-center shadow-lg">
         <div className="bg-gray-300 w-32 h-32 rounded-full shadow-md drag-down">
-          <img alt="Animated style dog image" className="w-full h-full rounded-full object-cover" src="https://storage.googleapis.com/a1aa/image/YlpvEfbklKRiDi8LX5Rww5U3zZZwHEUfju1qUNknpEZ6e2OnA.jpg" />
+          <img
+            alt="Animated style dog image"
+            className="w-full h-full rounded-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/YlpvEfbklKRiDi8LX5Rww5U3zZZwHEUfju1qUNknpEZ6e2OnA.jpg"
+          />
         </div>
-        <p className="text-gray-700 text-3xl mt-4 font-bold">{user.points} PixelDogs</p>
+        <p id="pixelDogsCount" className="text-gray-700 text-3xl mt-4 font-bold">
+          {user.points} PixelDogs
+        </p>
         <div className="bg-gray-100 w-3/4 mt-4 p-6 rounded-lg flex flex-col items-center shadow-md">
-          <button className="bg-gray-200 text-gray-700 px-6 py-2 rounded-full mb-4 font-semibold shadow-sm hover:bg-gray-300 transition duration-300">Daily Tasks..!</button>
+          <button className="bg-gray-200 text-gray-700 px-6 py-2 rounded-full mb-4 font-semibold shadow-sm hover:bg-gray-300 transition duration-300">
+            Daily Tasks..!
+          </button>
           <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 shadow-sm glow-on-hover transition duration-300">
             <p className="text-gray-700 font-medium">Follow Our Youtube!</p>
             <button
@@ -92,8 +63,8 @@ export default function HomeUI({
                 }
               }}
               disabled={buttonStage1 === 'claimed' || isLoading}
-              className={`bg-gray-300 text-gray-700 px-4 py-1 rounded-full font-semibold shadow-sm hover:bg-gray-400 transition duration-300 ${
-                buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : ''
+              className={`bg-gray-300 text-gray-700 px-4 py-1 rounded-full font-semibold shadow-sm ${
+                buttonStage1 === 'claimed' || isLoading ? 'cursor-not-allowed' : 'hover:bg-gray-400 transition duration-300'
               }`}
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
@@ -112,7 +83,7 @@ export default function HomeUI({
               {buttonStage2 === 'check' ? 'Check' : buttonStage2 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
           </div>
-          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center mb-4 shadow-sm glow-blue-on-hover transition duration-300">
+          <div className="bg-gray-200 w-full p-4 rounded-lg flex justify-between items-center shadow-sm glow-blue-on-hover transition duration-300">
             <p className="text-gray-700 font-medium">Join Our Telegram!</p>
             <button
               onClick={() => {
@@ -128,8 +99,12 @@ export default function HomeUI({
         </div>
       </div>
       <div className="flex-grow"></div>
-      <button className="bg-gray-800 text-white w-3/4 py-4 rounded-full mb-6 font-semibold text-lg shadow-sm hover:bg-gray-900 transition duration-300">Farm PixelDogs...</button>
-      <p id="updateText" className="text-gray-700 text-center mb-4 fade fade-in text-sm">{notification}</p>
+      <button className="bg-gray-800 text-white w-3/4 py-4 rounded-full mb-6 font-semibold text-lg shadow-sm hover:bg-gray-900 transition duration-300">
+        Farm PixelDogs...
+      </button>
+      <p id="updateText" className="text-gray-700 text-center mb-4 fade fade-in text-sm">
+        Exciting updates are on the way, keep farming :)
+      </p>
       <div className="bg-white w-full py-4 flex justify-around items-center shadow-t-lg">
         <Link href="/">
           <a className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition duration-300">
