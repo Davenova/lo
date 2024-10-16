@@ -86,7 +86,7 @@ export default function HomeUI({
             <p className="text-sm">Home</p>
           </a>
         </Link>
-        <Link href="/friends">
+        <Link href="/invite">
           <a className="flex flex-col items-center text-gray-800">
             <i className="fas fa-users text-2xl"></i>
             <p className="text-sm">Friends</p>
