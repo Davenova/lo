@@ -16,6 +16,7 @@ model User {
   points        Int      @default(0)
   claimedButton1 Boolean @default(false)
   claimedButton2 Boolean @default(false)
+  claimedButton3 Boolean @default(false)
   invitedUsers  String[] @default([])
   invitedBy      String? @default("")
   createdAt     DateTime @default(now())
