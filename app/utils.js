@@ -31,5 +31,5 @@ export function toggleUpdateText() {
       updateTextElement.classList.remove('fade-out');
       updateTextElement.classList.add('fade-in');
     }, 1000);
-  }, 5000);
+  }, 10000);
 }
