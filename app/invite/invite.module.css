@@ -1,8 +1,16 @@
+:root {
+  --background-color: white;
+  --text-color: black;
+  --error-color: #f8d7da; /* Light red for error messages */
+  --notification-color: #d1fae5; /* Light green for notifications */
+}
+
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: white;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .content {
@@ -47,7 +55,7 @@
 }
 
 .invitedSection {
-  background-color: #f3f4f6;
+  background-color: #f3f4f6; /* Light gray */
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -88,13 +96,13 @@
 .notification {
   margin-top: 1rem;
   padding: 0.5rem;
-  background-color: #d1fae5;
-  color: #047857;
+  background-color: var(--notification-color);
+  color: #047857; /* Dark green */
   border-radius: 0.25rem;
 }
 
 .navigation {
-  background-color: white;
+  background-color: white; /* Ensure navigation stays white */
   width: 100%;
   padding: 1rem 0;
   display: flex;
@@ -106,4 +114,14 @@
 .navIcon {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+/* Override dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: white;
+    --text-color: black;
+    --error-color: #f8d7da;
+    --notification-color: #d1fae5;
+  }
 }
