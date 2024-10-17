@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       }
 
       const now = new Date();
-      const farmingDuration = Math.min((now.getTime() - farmStartTime.getTime()) / (1000 * 60), 12 * 60); // in minutes, capped at 12 hours
+      const farmingDuration = Math.min((now.getTime() - farmStartTime.getTime()) / (1000 * 10), 1 * 1); // in minutes, capped at 12 hours
       const farmingAmount = Math.floor(farmingDuration * 5); // 5 PD per minute
 
       await prisma.user.update({
