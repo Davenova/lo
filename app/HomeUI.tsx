@@ -106,24 +106,6 @@ export default function HomeUI({
         <Link href="/" className="footer-link">
   <i className="bi bi-house footer-icon"></i>
   <p className="footer-text">Home</p>
-<Link href="/" className="footer-link">
-  <svg className="footer-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 2L2 7h3v8h4V9h2v6h4V7h3L12 2z" />
-  </svg>
-  <p className="footer-text">Home</p>
-</Link>
-<Link href="/invite" className="footer-link">
-  <svg className="footer-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 2a10 10 0 00-7.547 16.52A10.006 10.006 0 0112 22a10 10 0 007.547-3.48A10 10 0 0012 2z" />
-  </svg>
-  <p className="footer-text">Friends</p>
-</Link>
-<Link href="/wallet" className="footer-link">
-  <svg className="footer-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M3 3h18a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm0 2v16h18V5H3z" />
-  </svg>
-  <p className="footer-text">Wallet</p>
-</Link>
       </div>
     </div>
   );
