@@ -21,6 +21,7 @@ export default function Home() {
   const [buttonStage2, setButtonStage2] = useState<'check' | 'claim' | 'claimed'>('check')
   const [buttonStage3, setButtonStage3] = useState<'check' | 'claim' | 'claimed'>('check')
   const [isLoading, setIsLoading] = useState(false)
+  const [isFarming, setIsFarming] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -59,6 +60,53 @@ export default function Home() {
       setError('This app should be opened in Telegram')
     }
   }, [])
+
+  const handleStartFarming = async () => {
+    if (!user) return
+
+    try {
+      const res = await fetch('/api/start-farming', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ telegramId: user.telegramId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setIsFarming(true)
+      } else {
+        setError('Failed to start farming')
+      }
+    } catch {
+      setError('An error occurred while starting farming')
+    }
+  }
+
+  const handleStopFarming = async () => {
+    if (!user) return
+
+    try {
+      const res = await fetch('/api/stop-farming', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ telegramId: user.telegramId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setUser({ ...user, points: data.points })
+        setIsFarming(false)
+        setNotification(`Farming stopped. Earned ${data.farmedAmount} PixelDogs!`)
+        setTimeout(() => setNotification(''), 3000)
+      } else {
+        setError('Failed to stop farming')
+      }
+    } catch {
+      setError('An error occurred while stopping farming')
+    }
+  }
 
   const handleIncreasePoints = async (pointsToAdd: number, buttonId: string) => {
     if (!user) return
@@ -105,6 +153,7 @@ export default function Home() {
     }
   }
 
+
   const handleClaim1 = () => {
     if (buttonStage1 === 'claim') {
       setIsLoading(true)
@@ -150,6 +199,8 @@ export default function Home() {
       handleClaim1={handleClaim1}
       handleClaim2={handleClaim2}
       handleClaim3={handleClaim3}
+      handleStartFarming={handleStartFarming}
+      handleStopFarming={handleStopFarming}
     />
   )
 }
