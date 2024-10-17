@@ -1,0 +1,109 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+}
+
+.icon + .icon {
+  margin-left: 1rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.inviteButton {
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.invitedSection {
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.invitedHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.invitedIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.invitedTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.emptyStateIcon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+}
+
+.emptyStateText {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.notification {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #d1fae5;
+  color: #047857;
+  border-radius: 0.25rem;
+}
+
+.navigation {
+  background-color: white;
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+.navIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
