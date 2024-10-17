@@ -44,7 +44,7 @@
 
 .tasks-container {
   background-color: #f7fafc; /* gray-100 */
-  width: 75%; /* w-3/4 */
+  width: 100%; /* w-3/4 */
   margin-top: 1rem; /* mt-4 */
   padding: 1.5rem; /* p-6 */
   border-radius: 0.5rem; /* rounded-lg */
