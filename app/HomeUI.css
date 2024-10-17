@@ -25,6 +25,7 @@
   height: 16rem; /* 32 */
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 20px; /* Adds space above the circle */
 }
 
 .dog-image {
