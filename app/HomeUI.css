@@ -72,7 +72,7 @@
   background-color: #edf2f7; /* gray-200 */
   width: 120%;
   padding: 1rem; /* p-4 */
-  border-radius: 0.5rem; /* rounded-lg */
+  border-radius: 1rem; /* rounded-lg */
   display: flex;
   justify-content: space-between;
   align-items: center;
