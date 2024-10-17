@@ -16,6 +16,8 @@ interface HomeUIProps {
   handleClaim1: () => void;
   handleClaim2: () => void;
   handleClaim3: () => void;
+  handleStartFarming: () => void;
+  handleStopFarming: () => void;
 }
 
 export default function HomeUI({
@@ -31,14 +33,19 @@ export default function HomeUI({
   handleClaim1,
   handleClaim2,
   handleClaim3,
+  handleStartFarming,
+  handleStopFarming,
 }: HomeUIProps) {
+  const [isFarming, setIsFarming] = useState(false);
+  const [farmingTime, setFarmingTime] = useState(0);
+  const [farmedAmount, setFarmedAmount] = useState(0);
+
   useEffect(() => {
-      // Append Font Awesome stylesheet
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-    toggleUpdateText(); // Call the function to toggle update text
+    toggleUpdateText();
   }, []);
 
   useEffect(() => {
