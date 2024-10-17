@@ -44,15 +44,26 @@ export default function HomeUI({
   }, []);
 
   useEffect(() => {
+    setIsFarming(!!user.farmStartTime);
+    setFarmedAmount(user.farmAmount);
+
     let interval: NodeJS.Timeout;
-    if (isFarming) {
-      interval = setInterval(() => {
-        setFarmedAmount(prev => prev + 5);
-      }, 60000); // Update every minute
+    if (user.farmStartTime) {
+      interval = setInterval(async () => {
+        const response = await fetch('/api/farm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ telegramId: user.telegramId, action: 'update' })
+        });
+        const data = await response.json();
+        if (data.success) {
+          setFarmedAmount(data.farmedAmount);
+        }
+      }, 5000); // Update every 5 seconds
     }
     return () => clearInterval(interval);
-  }, [isFarming]);
-
+  }, [user]);
+  
   const handleFarmClick = async () => {
     if (!isFarming) {
       setIsFarming(true);
@@ -71,12 +82,12 @@ export default function HomeUI({
       });
       const data = await response.json();
       if (data.success) {
-        // Update user's points
+        setFarmedAmount(0);
         // You might want to update the user state here or refetch user data
       }
     }
   };
-
+  
   return (
     <div className="home-container">
       <div className="header-container">
