@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react'; // Ensure React is imported
 import Link from 'next/link';
-import { toggleUpdateText } from './utils';
-import './HomeUI.css';
+import { toggleUpdateText } from './utils'; // Import the function from utils.js
+import './HomeUI.css'; // Import your CSS file
 
 interface HomeUIProps {
   user: any;
@@ -32,65 +32,41 @@ export default function HomeUI({
   handleClaim2,
   handleClaim3,
 }: HomeUIProps) {
-  const [isFarming, setIsFarming] = useState(false);
-  const [farmedAmount, setFarmedAmount] = useState(0);
-
   useEffect(() => {
+      // Append Font Awesome stylesheet
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-    toggleUpdateText();
-
-    // Check if farming was in progress
-    if (user.farmStartTime) {
-      setIsFarming(true);
-      updateFarmedAmount();
-    }
+    toggleUpdateText(); // Call the function to toggle update text
   }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isFarming) {
-      interval = setInterval(updateFarmedAmount, 1000); // Update every 1 seconds
+      interval = setInterval(() => {
+        setFarmingTime((prev) => {
+          if (prev >= 60) {
+            handleStopFarming();
+            return 0;
+          }
+          return prev + 1;
+        });
+        setFarmedAmount((prev) => prev + 0.5);
+      }, 1000);
     }
     return () => clearInterval(interval);
   }, [isFarming]);
 
-  const updateFarmedAmount = async () => {
-    const response = await fetch('/api/farm', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ telegramId: user.telegramId, action: 'update' })
-    });
-    const data = await response.json();
-    if (data.success) {
-      setFarmedAmount(data.farmedAmount);
-    }
-  };
-
-  const handleFarmClick = async () => {
-    if (!isFarming) {
-      setIsFarming(true);
-      setFarmedAmount(0);
-      await fetch('/api/farm', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telegramId: user.telegramId, action: 'start' })
-      });
+  const handleFarmClick = () => {
+    if (isFarming) {
+      handleStopFarming();
     } else {
-      setIsFarming(false);
-      const response = await fetch('/api/farm', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telegramId: user.telegramId, action: 'collect' })
-      });
-      const data = await response.json();
-      if (data.success) {
-        // Update user's points
-        // You might want to update the user state here or refetch user data
-      }
+      handleStartFarming();
     }
+    setIsFarming(!isFarming);
+    setFarmingTime(0);
+    setFarmedAmount(0);
   };
 
   return (
@@ -106,9 +82,9 @@ export default function HomeUI({
         <p id="pixelDogsCount" className="pixel-dogs-count">
           {user.points} PixelDogs
         </p>
-        <p id="updateText" className="update-text fade fade-in">
-          Exciting updates are on the way:)
-        </p>
+      <p id="updateText" className="update-text fade fade-in">
+        Exciting updates are on the way:)
+      </p>
         <div className="tasks-container">
           <button className="tasks-button">Daily Tasks..!</button>
           <div className="social-container">
@@ -158,8 +134,13 @@ export default function HomeUI({
         </div>
       </div>
       <div className="flex-grow"></div>
-      <button className="farm-button" onClick={handleFarmClick}>
-        {isFarming ? `Farming... ${farmedAmount} PD` : 'Farm PixelDogs...'}
+      <button 
+        className="farm-button" 
+        onClick={handleFarmClick}
+      >
+        {isFarming 
+          ? `Farming... ${farmedAmount.toFixed(1)} PD (${60 - farmingTime}s left)` 
+          : 'Farm PixelDogs...'}
       </button>
       <div className="footer-container">
         <Link href="/">
