@@ -35,40 +35,39 @@ export default function HomeUI({
   const [isFarming, setIsFarming] = useState(false);
   const [farmedAmount, setFarmedAmount] = useState(0);
 
-  // Fetch farming status and points when component loads
-  useEffect(() => {
-    async function fetchFarmingStatus() {
-      const response = await fetch('/api/farm/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telegramId: user.telegramId })
-      });
-      const data = await response.json();
-      if (data.isFarming) {
-        setIsFarming(true);
-        setFarmedAmount(data.farmedAmount);
-      }
-    }
-    fetchFarmingStatus();
-  }, []);
-
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
     toggleUpdateText();
+
+    // Check if farming was in progress
+    if (user.farmStartTime) {
+      setIsFarming(true);
+      updateFarmedAmount();
+    }
   }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isFarming) {
-      interval = setInterval(() => {
-        setFarmedAmount(prev => prev + 1); // Increment by 1 every minute
-      }, 1000); // Update every minute
+      interval = setInterval(updateFarmedAmount, 2000); // Update every 2 seconds
     }
     return () => clearInterval(interval);
   }, [isFarming]);
+
+  const updateFarmedAmount = async () => {
+    const response = await fetch('/api/farm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telegramId: user.telegramId, action: 'update' })
+    });
+    const data = await response.json();
+    if (data.success) {
+      setFarmedAmount(data.farmedAmount);
+    }
+  };
 
   const handleFarmClick = async () => {
     if (!isFarming) {
