@@ -54,6 +54,9 @@ export default function HomeUI({
         <p id="pixelDogsCount" className="pixel-dogs-count">
           {user.points} PixelDogs
         </p>
+      <p id="updateText" className="update-text fade fade-in">
+        Exciting updates are on the way:)
+      </p>
         <div className="tasks-container">
           <button className="tasks-button">Daily Tasks..!</button>
           <div className="social-container">
@@ -73,9 +76,6 @@ export default function HomeUI({
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
-              <p id="updateText" className="update-text fade fade-in">
-        Exciting updates are on the way:)
-      </p>
           </div>
           <div className="social-container">
             <p className="social-text">Follow Our Twitter!</p>
