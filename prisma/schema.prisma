@@ -21,4 +21,6 @@ model User {
   invitedBy      String? @default("")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  farmStartTime DateTime?
+  farmAmount    Int       @default(0)
 }
