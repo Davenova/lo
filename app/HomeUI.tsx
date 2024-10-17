@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; // Ensure React is imported
+import React, { useEffect, useState } from 'react'; // Ensure React is imported
 import Link from 'next/link';
 import { toggleUpdateText } from './utils'; // Import the function from utils.js
 import './HomeUI.css'; // Import your CSS file
