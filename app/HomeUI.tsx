@@ -52,7 +52,7 @@ export default function HomeUI({
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isFarming) {
-      interval = setInterval(updateFarmedAmount, 2000); // Update every 2 seconds
+      interval = setInterval(updateFarmedAmount, 1000); // Update every 1 seconds
     }
     return () => clearInterval(interval);
   }, [isFarming]);
