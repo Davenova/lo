@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
         const updatedUser = await prisma.user.update({
             where: { telegramId },
             data: { 
-                points: { increment: pointsToAdd }, // Increment points by pointsToAdd
-                [claimedField]: true // Update claimed status based on buttonId
+                points: { increment: pointsToAdd },
+                [claimedField]: true
             }
         });
 
