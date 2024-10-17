@@ -65,7 +65,7 @@ export default function HomeUI({
     if (isFarming) {
       interval = setInterval(() => {
         setFarmedAmount(prev => prev + 1); // Increment by 1 every minute
-      }, 60000); // Update every minute
+      }, 1000); // Update every minute
     }
     return () => clearInterval(interval);
   }, [isFarming]);
