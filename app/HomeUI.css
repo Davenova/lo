@@ -129,14 +129,19 @@
 }
 
 .footer-container {
-  background-color: white;
+  background-color: white; /* White background */
   width: 100%;
-  padding: 1rem; /* py-4 */
+  padding: 1rem; /* Space inside */
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-around; /* Evenly spaced items */
+  align-items: center; /* Centered vertically */
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixed position */
+  bottom: 0; /* Sticks to the bottom */
+  left: 0; /* Aligns to the left */
+  z-index: 1000; /* Ensures it stays above other content */
 }
+
 
 .footer-link {
   display: flex;
