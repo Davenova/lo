@@ -73,6 +73,9 @@ export default function HomeUI({
             >
               {isLoading ? 'Claiming...' : buttonStage1 === 'check' ? 'Check' : buttonStage1 === 'claim' ? 'Claim' : 'Claimed'}
             </button>
+              <p id="updateText" className="update-text fade fade-in">
+        Exciting updates are on the way:)
+      </p>
           </div>
           <div className="social-container">
             <p className="social-text">Follow Our Twitter!</p>
@@ -104,9 +107,6 @@ export default function HomeUI({
       </div>
       <div className="flex-grow"></div>
       <button className="farm-button">Farm PixelDogs...</button>
-      <p id="updateText" className="update-text fade fade-in">
-        Exciting updates are on the way:)
-      </p>
       <div className="footer-container">
         <Link href="/">
           <a className="flex flex-col items-center text-gray-800">
