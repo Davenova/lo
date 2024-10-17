@@ -35,6 +35,23 @@ export default function HomeUI({
   const [isFarming, setIsFarming] = useState(false);
   const [farmedAmount, setFarmedAmount] = useState(0);
 
+  // Fetch farming status and points when component loads
+  useEffect(() => {
+    async function fetchFarmingStatus() {
+      const response = await fetch('/api/farm/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegramId: user.telegramId })
+      });
+      const data = await response.json();
+      if (data.isFarming) {
+        setIsFarming(true);
+        setFarmedAmount(data.farmedAmount);
+      }
+    }
+    fetchFarmingStatus();
+  }, []);
+
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -44,26 +61,15 @@ export default function HomeUI({
   }, []);
 
   useEffect(() => {
-    setIsFarming(!!user.farmStartTime);
-    setFarmedAmount(user.farmAmount);
-
     let interval: NodeJS.Timeout;
-    if (user.farmStartTime) {
-      interval = setInterval(async () => {
-        const response = await fetch('/api/farm', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ telegramId: user.telegramId, action: 'update' })
-        });
-        const data = await response.json();
-        if (data.success) {
-          setFarmedAmount(data.farmedAmount);
-        }
-      }, 5000); // Update every 5 seconds
+    if (isFarming) {
+      interval = setInterval(() => {
+        setFarmedAmount(prev => prev + 1); // Increment by 1 every minute
+      }, 60000); // Update every minute
     }
     return () => clearInterval(interval);
-  }, [user]);
-  
+  }, [isFarming]);
+
   const handleFarmClick = async () => {
     if (!isFarming) {
       setIsFarming(true);
@@ -82,12 +88,12 @@ export default function HomeUI({
       });
       const data = await response.json();
       if (data.success) {
-        setFarmedAmount(0);
+        // Update user's points
         // You might want to update the user state here or refetch user data
       }
     }
   };
-  
+
   return (
     <div className="home-container">
       <div className="header-container">
