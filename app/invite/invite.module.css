@@ -1,47 +1,8 @@
-/* Light Mode Styles */
-body.light-mode {
-  background-color: white;
-  color: black;
-}
-
-.container.light-mode {
-  background-color: white;
-}
-
-.inviteButton.light-mode {
-  background-color: black;
-  color: white;
-}
-
-.notification.light-mode {
-  background-color: #d1fae5;
-  color: #047857;
-}
-
-/* Dark Mode Styles */
-body.dark-mode {
-  background-color: #1a1a1a;
-  color: white;
-}
-
-.container.dark-mode {
-  background-color: #1a1a1a;
-}
-
-.inviteButton.dark-mode {
-  background-color: #333;
-  color: white;
-}
-
-.notification.dark-mode {
-  background-color: #2e2e2e;
-  color: #a3e635;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: white;
 }
 
 .content {
@@ -77,6 +38,8 @@ body.dark-mode {
 
 .inviteButton {
   width: 100%;
+  background-color: black;
+  color: white;
   font-weight: bold;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -125,6 +88,8 @@ body.dark-mode {
 .notification {
   margin-top: 1rem;
   padding: 0.5rem;
+  background-color: #d1fae5;
+  color: #047857;
   border-radius: 0.25rem;
 }
 
