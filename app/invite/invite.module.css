@@ -115,13 +115,3 @@
   width: 1.5rem;
   height: 1.5rem;
 }
-
-/* Override dark mode styles */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: white;
-    --text-color: black;
-    --error-color: #f8d7da;
-    --notification-color: #d1fae5;
-  }
-}
