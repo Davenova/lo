@@ -16,7 +16,6 @@ interface HomeUIProps {
   handleClaim1: () => void;
   handleClaim2: () => void;
   handleClaim3: () => void;
-  handleIncreasePoints: (points: number) => void;
 }
 
 export default function HomeUI({
@@ -32,11 +31,9 @@ export default function HomeUI({
   handleClaim1,
   handleClaim2,
   handleClaim3,
-  handleIncreasePoints,
 }: HomeUIProps) {
   const [isFarming, setIsFarming] = useState(false);
-  const [farmingTime, setFarmingTime] = useState(0);
-  const [farmedPixelDogs, setFarmedPixelDogs] = useState(0);
+  const [farmedAmount, setFarmedAmount] = useState(0);
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -44,38 +41,39 @@ export default function HomeUI({
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
     toggleUpdateText();
-
-    let farmingInterval: NodeJS.Timeout;
-    if (isFarming) {
-      farmingInterval = setInterval(() => {
-        setFarmingTime((prevTime) => {
-          if (prevTime >= 720) {
-            setIsFarming(false);
-            return 0;
-          }
-          return prevTime + 1;
-        });
-        setFarmedPixelDogs((prev) => prev + (5 / 60));
-      }, 1000);
-    }
-
-    return () => {
-      if (farmingInterval) clearInterval(farmingInterval);
-    };
-  }, [isFarming]);
+  }, []);
 
   useEffect(() => {
-    if (farmingTime % 60 === 0 && farmingTime > 0) {
-      handleIncreasePoints(Math.floor(farmedPixelDogs));
-      setFarmedPixelDogs(0);
+    let interval: NodeJS.Timeout;
+    if (isFarming) {
+      interval = setInterval(() => {
+        setFarmedAmount(prev => prev + 5);
+      }, 60000); // Update every minute
     }
-  }, [farmingTime, farmedPixelDogs, handleIncreasePoints]);
+    return () => clearInterval(interval);
+  }, [isFarming]);
 
-  const handleFarmClick = () => {
+  const handleFarmClick = async () => {
     if (!isFarming) {
       setIsFarming(true);
-      setFarmingTime(0);
-      setFarmedPixelDogs(0);
+      setFarmedAmount(0);
+      await fetch('/api/farm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegramId: user.telegramId, action: 'start' })
+      });
+    } else {
+      setIsFarming(false);
+      const response = await fetch('/api/farm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegramId: user.telegramId, action: 'collect' })
+      });
+      const data = await response.json();
+      if (data.success) {
+        // Update user's points
+        // You might want to update the user state here or refetch user data
+      }
     }
   };
 
@@ -144,14 +142,8 @@ export default function HomeUI({
         </div>
       </div>
       <div className="flex-grow"></div>
-      <button 
-        className="farm-button" 
-        onClick={handleFarmClick}
-        disabled={isFarming}
-      >
-        {isFarming 
-          ? `Farming... ${Math.floor(farmedPixelDogs)} PD` 
-          : 'Farm PixelDogs...'}
+      <button className="farm-button" onClick={handleFarmClick}>
+        {isFarming ? `Farming... ${farmedAmount} PD` : 'Farm PixelDogs...'}
       </button>
       <div className="footer-container">
         <Link href="/">
