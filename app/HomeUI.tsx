@@ -100,7 +100,7 @@ export default function HomeUI({
       <div className="flex-grow"></div>
       <button className="farm-button">Farm PixelDogs...</button>
       <p id="updateText" className="update-text fade fade-in">
-        Exciting updates are on the way, keep farming :)
+        Exciting updates are on the way:)
       </p>
       <div className="footer-container">
         <Link href="/">
