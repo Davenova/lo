@@ -17,7 +17,7 @@ interface HomeUIProps {
   handleClaim2: () => void;
   handleClaim3: () => void;
   handleStartFarming: () => void;
-  handleStopFarming: () => void;
+  handleStopFarming: () => void
 }
 
 export default function HomeUI({
