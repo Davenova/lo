@@ -45,11 +45,15 @@ export async function POST(req: NextRequest) {
             }
           });
 
+          // Award 1000 points to the inviter
           await prisma.user.update({
             where: { telegramId: inviterId },
             data: {
               invitedUsers: {
                 push: `@${userData.username || userData.id}`
+              },
+              points: {
+                increment: 1000
               }
             }
           });
