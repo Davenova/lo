@@ -60,11 +60,11 @@ export default function Home() {
     }
   }, [])
 
-  const handleIncreasePoints = async (pointsToAdd: number, buttonId?: string) => {
+  const handleIncreasePoints = async (pointsToAdd: number, buttonId: string) => {
     if (!user) return
 
     try {
-      const res = await fetch(buttonId ? '/api/increase-points' : '/api/farm-pixeldogs', {
+      const res = await fetch('/api/increase-points', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +150,6 @@ export default function Home() {
       handleClaim1={handleClaim1}
       handleClaim2={handleClaim2}
       handleClaim3={handleClaim3}
-      handleIncreasePoints={handleIncreasePoints}
     />
   )
 }
