@@ -115,7 +115,13 @@
   font-size: 1.25rem; /* text-lg */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s;
+  position: fixed; /* Fixed position */
+  bottom: 20px; /* Distance from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to center the button */
+  z-index: 1000; /* Ensures it's above other content */
 }
+
 
 .farm-button:hover {
   background-color: #1a202c; /* hover:bg-gray-900 */
