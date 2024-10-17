@@ -133,6 +133,7 @@
   text-align: center;
   margin-bottom: 1rem; /* mb-4 */
   font-size: 0.875rem; /* text-sm */
+  margin-bottom: 80px; /* Adds space below the text */
 }
 
 .footer-container {
