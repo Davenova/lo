@@ -104,6 +104,10 @@ export default function Invite() {
               <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <h2 className={styles.invitedTitle}>Invited Friends :</h2>
+            {/* New: Display the number of invited users */}
+            <div className="text-center mb-4">
+              <p>Users invited: {invitedUsers.length}</p>
+            </div>
           </div>
           {invitedUsers.length > 0 ? (
             <ul className={styles.invitedList}>
