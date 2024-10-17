@@ -1,16 +1,9 @@
-:root {
-  --background-color: white;
-  --text-color: black;
-  --error-color: #f8d7da; /* Light red for error messages */
-  --notification-color: #d1fae5; /* Light green for notifications */
-}
 
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: white;
 }
 
 .content {
@@ -55,7 +48,7 @@
 }
 
 .invitedSection {
-  background-color: #f3f4f6; /* Light gray */
+  background-color: #f3f4f6;
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -96,13 +89,13 @@
 .notification {
   margin-top: 1rem;
   padding: 0.5rem;
-  background-color: var(--notification-color);
-  color: #047857; /* Dark green */
+  background-color: #d1fae5;
+  color: #047857;
   border-radius: 0.25rem;
 }
 
 .navigation {
-  background-color: white; /* Ensure navigation stays white */
+  background-color: white;
   width: 100%;
   padding: 1rem 0;
   display: flex;
