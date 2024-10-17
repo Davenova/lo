@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'; // Ensure React is imported
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { toggleUpdateText } from './utils'; // Import the function from utils.js
-import './HomeUI.css'; // Import your CSS file
+import { toggleUpdateText } from './utils';
+import './HomeUI.css';
 
 interface HomeUIProps {
   user: any;
@@ -16,6 +16,7 @@ interface HomeUIProps {
   handleClaim1: () => void;
   handleClaim2: () => void;
   handleClaim3: () => void;
+  handleIncreasePoints: (points: number) => void;
 }
 
 export default function HomeUI({
@@ -31,15 +32,52 @@ export default function HomeUI({
   handleClaim1,
   handleClaim2,
   handleClaim3,
+  handleIncreasePoints,
 }: HomeUIProps) {
+  const [isFarming, setIsFarming] = useState(false);
+  const [farmingTime, setFarmingTime] = useState(0);
+  const [farmedPixelDogs, setFarmedPixelDogs] = useState(0);
+
   useEffect(() => {
-      // Append Font Awesome stylesheet
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
     document.head.appendChild(link);
-    toggleUpdateText(); // Call the function to toggle update text
-  }, []);
+    toggleUpdateText();
+
+    let farmingInterval: NodeJS.Timeout;
+    if (isFarming) {
+      farmingInterval = setInterval(() => {
+        setFarmingTime((prevTime) => {
+          if (prevTime >= 720) {
+            setIsFarming(false);
+            return 0;
+          }
+          return prevTime + 1;
+        });
+        setFarmedPixelDogs((prev) => prev + (5 / 60));
+      }, 1000);
+    }
+
+    return () => {
+      if (farmingInterval) clearInterval(farmingInterval);
+    };
+  }, [isFarming]);
+
+  useEffect(() => {
+    if (farmingTime % 60 === 0 && farmingTime > 0) {
+      handleIncreasePoints(Math.floor(farmedPixelDogs));
+      setFarmedPixelDogs(0);
+    }
+  }, [farmingTime, farmedPixelDogs, handleIncreasePoints]);
+
+  const handleFarmClick = () => {
+    if (!isFarming) {
+      setIsFarming(true);
+      setFarmingTime(0);
+      setFarmedPixelDogs(0);
+    }
+  };
 
   return (
     <div className="home-container">
@@ -54,9 +92,9 @@ export default function HomeUI({
         <p id="pixelDogsCount" className="pixel-dogs-count">
           {user.points} PixelDogs
         </p>
-      <p id="updateText" className="update-text fade fade-in">
-        Exciting updates are on the way:)
-      </p>
+        <p id="updateText" className="update-text fade fade-in">
+          Exciting updates are on the way:)
+        </p>
         <div className="tasks-container">
           <button className="tasks-button">Daily Tasks..!</button>
           <div className="social-container">
@@ -106,7 +144,15 @@ export default function HomeUI({
         </div>
       </div>
       <div className="flex-grow"></div>
-      <button className="farm-button">Farm PixelDogs...</button>
+      <button 
+        className="farm-button" 
+        onClick={handleFarmClick}
+        disabled={isFarming}
+      >
+        {isFarming 
+          ? `Farming... ${Math.floor(farmedPixelDogs)} PD` 
+          : 'Farm PixelDogs...'}
+      </button>
       <div className="footer-container">
         <Link href="/">
           <a className="flex flex-col items-center text-gray-800">
