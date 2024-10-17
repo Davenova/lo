@@ -41,12 +41,24 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json({ success: true, farmedAmount: farmingAmount });
-    } else if (action === 'status') {
-      return NextResponse.json({
-        success: true,
-        isFarming: !!user.farmStartTime,
-        farmedAmount: user.farmAmount
+    } else if (action === 'update') {
+      const farmStartTime = user.farmStartTime;
+      if (!farmStartTime) {
+        return NextResponse.json({ error: 'Farming not started' }, { status: 400 });
+      }
+
+      const now = new Date();
+      const farmingDuration = Math.min((now.getTime() - farmStartTime.getTime()) / (1000 * 60), 12 * 60); // in minutes, capped at 12 hours
+      const farmingAmount = Math.floor(farmingDuration); // 1 PD per minute
+
+      await prisma.user.update({
+        where: { telegramId },
+        data: {
+          farmAmount: farmingAmount
+        }
       });
+
+      return NextResponse.json({ success: true, farmedAmount: farmingAmount });
     }
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
