@@ -1,24 +1,8 @@
-:root {
-  --background-color: white;
-  --button-background-color: black;
-  --text-color: black;
-  --notification-background: #d1fae5;
-  --notification-text: #047857;
-}
-
-[data-theme="dark"] {
-  --background-color: #1a1a1a; /* Dark background */
-  --button-background-color: #333; /* Dark button */
-  --text-color: white;
-  --notification-background: #2e2e2e; /* Dark notification */
-  --notification-text: #a3e635; /* Lighter text for contrast */
-}
-
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--background-color);
+  background-color: white;
 }
 
 .content {
@@ -54,8 +38,8 @@
 
 .inviteButton {
   width: 100%;
-  background-color: var(--button-background-color);
-  color: var(--text-color);
+  background-color: black;
+  color: white;
   font-weight: bold;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -104,13 +88,13 @@
 .notification {
   margin-top: 1rem;
   padding: 0.5rem;
-  background-color: var(--notification-background);
-  color: var(--notification-text);
+  background-color: #d1fae5;
+  color: #047857;
   border-radius: 0.25rem;
 }
 
 .navigation {
-  background-color: var(--background-color);
+  background-color: white;
   width: 100%;
   padding: 1rem 0;
   display: flex;
@@ -122,21 +106,4 @@
 .navIcon {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-/* Dark mode styles using media query */
-@media (prefers-color-scheme: dark) {
-  .container {
-    background-color: #1a1a1a;
-  }
-
-  .inviteButton {
-    background-color: #333;
-    color: white;
-  }
-
-  .notification {
-    background-color: #2e2e2e;
-    color: #a3e635;
-  }
 }
